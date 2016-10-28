@@ -22,13 +22,31 @@ public class Proyecto {
 	
 	// Personas
 	private ArrayList<Persona> personas;
+	
+	// Calendario
+	private Calendario calendario;
 
 	// Constructor con nombre
-	
+
 	Proyecto(String nombre) throws Exception {
 		this.setNombre(nombre);
 		this.tareas = new ArrayList<Tarea>();
 		this.personas = new ArrayList<Persona>();
+		this.calendario = new Calendario(8);
+	}
+	
+	// Calendario
+	
+	public Calendario getCalendario() {
+		return calendario;
+	}
+
+	public void setCalendario(Calendario calendario) {
+		this.calendario = calendario;
+	}
+	
+	public int esfuerzoRequeridoEnHoras() {
+		return calendario.esfuerzoEnHoras(fechaInicioReal, fechaFinReal);
 	}
 	
 	// Tareas
@@ -191,21 +209,50 @@ public class Proyecto {
 			
 			// Tareas
 			p1.agregarTarea(new Tarea("Programar", "Hacer el tp 1"));
-			System.out.println(p1.numeroDeTareas());
+			//System.out.println(p1.numeroDeTareas());
 			p1.agregarTarea(new Tarea("Programar", "Hacer el tp 2"));
-			System.out.println(p1.numeroDeTareas());
+			//System.out.println(p1.numeroDeTareas());
 			p1.quitarTarea(0);
 			p1.vaciasTareas();
-			System.out.println(p1.numeroDeTareas());
+			//System.out.println(p1.numeroDeTareas());
 			
 			// Personas
 			p1.agregarPersona(new Persona("Leandro", "Diaz"));
-			System.out.println(p1.numeroDePersonas());
+			//System.out.println(p1.numeroDePersonas());
 			p1.agregarPersona(new Persona("Leandro", "Diaz 2"));
-			System.out.println(p1.numeroDePersonas());
+			//System.out.println(p1.numeroDePersonas());
 			p1.quitarPersona(0);
 			p1.vaciarPersonas();
-			System.out.println(p1.numeroDePersonas());
+			//System.out.println(p1.numeroDePersonas());
+			
+			// Calendario
+			
+			// 1.2) a) 8 hs, lunes a viernes: resultado 40
+			p1.getCalendario().setHorasLaborables(8);
+			p1.setFechaInicioReal(2016, Calendar.OCTOBER, 24);
+			p1.setFechaFinReal(2016, Calendar.OCTOBER, 28);
+			System.out.println(p1.esfuerzoRequeridoEnHoras());
+			
+			// 1.2) b) 6 hs, lunes a jueves: resultado 24
+			p1.getCalendario().setHorasLaborables(6);
+			p1.setFechaInicioReal(2016, Calendar.OCTOBER, 24);
+			p1.setFechaFinReal(2016, Calendar.OCTOBER, 27);
+			System.out.println(p1.esfuerzoRequeridoEnHoras());
+			
+			// 1.2) c) 6 hs, lunes a jueves, feriado martes: resultado 18
+			p1.getCalendario().setHorasLaborables(6);
+			p1.setFechaInicioReal(2016, Calendar.OCTOBER, 24);
+			p1.setFechaFinReal(2016, Calendar.OCTOBER, 27);
+			p1.getCalendario().getFeriados().add(new GregorianCalendar(2016, Calendar.OCTOBER, 25));
+			System.out.println(p1.esfuerzoRequeridoEnHoras());
+			
+			p1.getCalendario().getFeriados().clear();
+			
+			// 1.2) d) 8 hs, lunes a viernes de otra semana: resultado 80
+			p1.getCalendario().setHorasLaborables(8);
+			p1.setFechaInicioReal(2016, Calendar.OCTOBER, 24);
+			p1.setFechaFinReal(2016, Calendar.NOVEMBER, 4);
+			System.out.println(p1.esfuerzoRequeridoEnHoras());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
