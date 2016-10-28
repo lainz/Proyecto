@@ -1,5 +1,6 @@
 package proyecto;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -15,11 +16,81 @@ public class Proyecto {
 	// Fechas reales
 	private Calendar fechaInicioReal;
 	private Calendar fechaFinReal;
+	
+	// Tareas
+	private ArrayList<Tarea> tareas;
+	
+	// Personas
+	private ArrayList<Persona> personas;
 
 	// Constructor con nombre
 	
 	Proyecto(String nombre) throws Exception {
 		this.setNombre(nombre);
+		this.tareas = new ArrayList<Tarea>();
+		this.personas = new ArrayList<Persona>();
+	}
+	
+	// Tareas
+	
+	public void agregarTarea(Tarea tarea) throws Exception {
+		if (tareas.indexOf(tarea) != -1) {
+			throw new Exception("No se puede agregar una tarea que ya fue agregada.");
+		}
+		tareas.add(tarea);
+	}
+	
+	public void quitarTarea(int indice) throws Exception {
+		try {
+			tareas.remove(indice);
+		} catch (IndexOutOfBoundsException e) {
+			throw new Exception("No se puede quitar una tarea que no fue agregada.");
+		}
+	}
+	
+	public void quitarTarea(Tarea tarea) throws Exception {
+		if (!tareas.remove(tarea)) {
+			throw new Exception("No se puede quitar una tarea que no fue agregada.");
+		}
+	}
+	
+	public void vaciasTareas() {
+		tareas.clear();
+	}
+	
+	public int numeroDeTareas() {
+		return tareas.size();
+	}
+	
+	// Personas
+	
+	public void agregarPersona(Persona persona) throws Exception {
+		if (personas.indexOf(persona) != -1) {
+			throw new Exception("No se puede agregar una persona que ya fue agregada.");
+		}
+		personas.add(persona);
+	}
+	
+	public void quitarPersona(int indice) throws Exception {
+		try {
+			personas.remove(indice);
+		} catch (IndexOutOfBoundsException e) {
+			throw new Exception("No se puede quitar una persona que no fue agregada.");
+		}
+	}
+	
+	public void quitarPersona(Persona persona) throws Exception {
+		if (!personas.remove(persona)) {
+			throw new Exception("No se puede quitar una persona que no fue agregada.");
+		}
+	}
+	
+	public void vaciarPersonas() {
+		personas.clear();
+	}
+	
+	public int numeroDePersonas() {
+		return personas.size();
 	}
 	
 	// Nombre
@@ -117,6 +188,24 @@ public class Proyecto {
 			// Fechas reales
 			p1.setFechaInicioReal(2016, 12, 26);
 			p1.setFechaFinReal(2016, 12, 27);
+			
+			// Tareas
+			p1.agregarTarea(new Tarea("Programar", "Hacer el tp 1"));
+			System.out.println(p1.numeroDeTareas());
+			p1.agregarTarea(new Tarea("Programar", "Hacer el tp 2"));
+			System.out.println(p1.numeroDeTareas());
+			p1.quitarTarea(0);
+			p1.vaciasTareas();
+			System.out.println(p1.numeroDeTareas());
+			
+			// Personas
+			p1.agregarPersona(new Persona("Leandro", "Diaz"));
+			System.out.println(p1.numeroDePersonas());
+			p1.agregarPersona(new Persona("Leandro", "Diaz 2"));
+			System.out.println(p1.numeroDePersonas());
+			p1.quitarPersona(0);
+			p1.vaciarPersonas();
+			System.out.println(p1.numeroDePersonas());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
