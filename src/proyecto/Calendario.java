@@ -9,14 +9,6 @@ public class Calendario {
 	private ArrayList<LocalDate> feriados;
 	private ArrayList<Integer> diasNoLaborables;
 
-	public ArrayList<Integer> getDiasNoLaborables() {
-		return diasNoLaborables;
-	}
-
-	public void setDiasNoLaborables(ArrayList<Integer> diasNoLaborables) {
-		this.diasNoLaborables = diasNoLaborables;
-	}
-
 	// Fechas esperadas
 	private LocalDate fechaInicioEsperada;
 	private LocalDate fechaFinEsperada;
@@ -33,8 +25,16 @@ public class Calendario {
 		this.horasLaborables = horasLaborables;
 		this.feriados = new ArrayList<LocalDate>();
 		this.diasNoLaborables = new ArrayList<Integer>();
-		this.diasNoLaborables.add(6);
-		this.diasNoLaborables.add(7);
+		this.diasNoLaborables.add(6); // Sabado
+		this.diasNoLaborables.add(7); // Domingo
+	}
+	
+	public ArrayList<Integer> getDiasNoLaborables() {
+		return diasNoLaborables;
+	}
+
+	public void setDiasNoLaborables(ArrayList<Integer> diasNoLaborables) {
+		this.diasNoLaborables = diasNoLaborables;
 	}
 
 	public int getHorasLaborables() {
@@ -152,6 +152,22 @@ public class Calendario {
 				throw new Exception("La fecha de fin real debe ser mayor o igual a la fecha de inicio real.");
 			}
 		}
+	}
+	
+	public Double porcentajeDeAvance(LocalDate dia) {
+		LocalDate inicio = LocalDate.of(fechaInicioReal.getYear(), fechaInicioReal.getMonth(), fechaInicioReal.getDayOfMonth());
+		int total_dias = 0;
+		int total_dias_pasados = 0;
+		
+		do {
+			total_dias++;
+			if (!inicio.isAfter(dia)) {
+			  total_dias_pasados++;
+			}
+			inicio = inicio.plusDays(1);
+		} while(!inicio.isAfter(fechaFinReal));
+	
+		return (double) ((total_dias_pasados * 100) / total_dias);
 	}
 
 	public LocalDate getFechaFinReal() {

@@ -13,6 +13,15 @@ public class Tarea {
 	// Calendario
 	Calendario calendario;
 
+	Tarea(String nombre, String detalles) throws Exception {
+		this.setNombre(nombre);
+		this.setDetalles(detalles);
+		this.subtareas = new ArrayList<Tarea>();
+		this.calendario = new Calendario();
+	}
+
+	// Subtareas
+
 	public ArrayList<Tarea> getSubtareas() {
 		return subtareas;
 	}
@@ -20,6 +29,8 @@ public class Tarea {
 	public void setSubtareas(ArrayList<Tarea> subtareas) {
 		this.subtareas = subtareas;
 	}
+
+	// Calendario
 
 	public Calendario getCalendario() {
 		return calendario;
@@ -29,12 +40,7 @@ public class Tarea {
 		this.calendario = calendario;
 	}
 
-	Tarea(String nombre, String detalles) throws Exception {
-		this.setNombre(nombre);
-		this.setDetalles(detalles);
-		this.subtareas = new ArrayList<Tarea>();
-		this.calendario = new Calendario();
-	}
+	// Nombre
 
 	public String getNombre() {
 		return nombre;
@@ -47,34 +53,14 @@ public class Tarea {
 		this.nombre = nombre;
 	}
 
+	// Detalles
+
 	public String getDetalles() {
 		return detalles;
 	}
 
 	public void setDetalles(String detalles) {
 		this.detalles = detalles;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Tarea other = (Tarea) obj;
-		if (detalles == null) {
-			if (other.detalles != null)
-				return false;
-		} else if (!detalles.equals(other.detalles))
-			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
-				return false;
-		} else if (!nombre.equals(other.nombre))
-			return false;
-		return true;
 	}
 
 	// SubTareas
@@ -108,17 +94,42 @@ public class Tarea {
 		return subtareas.size();
 	}
 
+	// Esfuerzo en horas
+
 	public int esfuerzoRequeridoEnHoras(int horasLaborables) {
 		int total = 0;
-		
+
 		// Subtareas
-		for (int i = 0; i < subtareas.size(); i++) {
-			total = total + subtareas.get(i).getCalendario().esfuerzoRequeridoEnHoras();
-		}
+		// for (int i = 0; i < subtareas.size(); i++) {
+		// total = total +
+		// subtareas.get(i).getCalendario().esfuerzoRequeridoEnHoras();
+		// }
 		// Esta tarea
 		total = total + this.calendario.esfuerzoRequeridoEnHoras();
-		
+
 		return total * horasLaborables;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tarea other = (Tarea) obj;
+		if (detalles == null) {
+			if (other.detalles != null)
+				return false;
+		} else if (!detalles.equals(other.detalles))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		return true;
 	}
 
 	public static void main(String[] args) {
