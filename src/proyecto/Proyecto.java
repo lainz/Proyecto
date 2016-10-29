@@ -1,8 +1,8 @@
 package proyecto;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class Proyecto {
 	
@@ -10,12 +10,12 @@ public class Proyecto {
 	private String nombre;
 	
 	// Fechas esperadas
-	private Calendar fechaInicioEsperada;
-	private Calendar fechaFinEsperada;
+	private LocalDate fechaInicioEsperada;
+	private LocalDate fechaFinEsperada;
 	
 	// Fechas reales
-	private Calendar fechaInicioReal;
-	private Calendar fechaFinReal;
+	private LocalDate fechaInicioReal;
+	private LocalDate fechaFinReal;
 	
 	// Tareas
 	private ArrayList<Tarea> tareas;
@@ -128,7 +128,7 @@ public class Proyecto {
 	// Fecha inicio esperada
 	
 	public void setFechaInicioEsperada(int año, int mes, int dia) throws Exception {
-		fechaInicioEsperada = new GregorianCalendar(año, mes, dia);
+		fechaInicioEsperada = LocalDate.of(año, mes, dia);
 		// Si el año de fin esta establecido
 		if (fechaFinEsperada != null) {
 			// Si la fecha inicio es mayor
@@ -138,14 +138,14 @@ public class Proyecto {
 		}
 	}
 	
-	public Calendar getFechaInicioEsperada() {
+	public LocalDate getFechaInicioEsperada() {
 		return fechaInicioEsperada;
 	}
 	
 	// Fecha fin esperada
 	
 	public void setFechaFinEsperada(int año, int mes, int dia) throws Exception {
-		fechaFinEsperada = new GregorianCalendar(año, mes, dia);
+		fechaFinEsperada = LocalDate.of(año, mes, dia);
 		// Si el año de fin esta establecido
 		if (fechaInicioEsperada != null) {
 			// Si la fecha inicio es mayor
@@ -155,14 +155,14 @@ public class Proyecto {
 		}
 	}
 	
-	public Calendar getFechaFinEsperada() {
+	public LocalDate getFechaFinEsperada() {
 		return fechaFinEsperada;
 	}
 	
 	// Fecha inicio real
 	
 	public void setFechaInicioReal(int año, int mes, int dia) throws Exception {
-		fechaInicioReal = new GregorianCalendar(año, mes, dia);
+		fechaInicioReal = LocalDate.of(año, mes, dia);
 		// Si el año de fin esta establecido
 		if (fechaFinReal != null) {
 			// Si la fecha inicio es mayor
@@ -172,14 +172,14 @@ public class Proyecto {
 		}
 	}
 	
-	public Calendar getFechaInicioReal() {
+	public LocalDate getFechaInicioReal() {
 		return fechaInicioEsperada;
 	}
 	
 	// Fecha fin real
 	
 	public void setFechaFinReal(int año, int mes, int dia) throws Exception {
-		fechaFinReal = new GregorianCalendar(año, mes, dia);
+		fechaFinReal = LocalDate.of(año, mes, dia);
 		// Si el año de fin esta establecido
 		if (fechaInicioReal != null) {
 			// Si la fecha inicio es mayor
@@ -189,7 +189,7 @@ public class Proyecto {
 		}
 	}
 	
-	public Calendar getFechaFinReal() {
+	public LocalDate getFechaFinReal() {
 		return fechaFinReal;
 	}
 	
@@ -201,11 +201,11 @@ public class Proyecto {
 			Proyecto p1 = new Proyecto("Trabajo 1");
 			
 			// Fechas esperadas
-			p1.setFechaFinEsperada(2016, 10, 29);
-			p1.setFechaInicioEsperada(2016, 10, 28);
+			p1.setFechaFinEsperada(2016, Month.OCTOBER.getValue(), 29);
+			p1.setFechaInicioEsperada(2016, Month.OCTOBER.getValue(), 28);
 			// Fechas reales
-			p1.setFechaInicioReal(2016, 12, 26);
-			p1.setFechaFinReal(2016, 12, 27);
+			p1.setFechaInicioReal(2016, Month.OCTOBER.getValue(), 26);
+			p1.setFechaFinReal(2016, Month.OCTOBER.getValue(), 27);
 			
 			// Tareas
 			p1.agregarTarea(new Tarea("Programar", "Hacer el tp 1"));
@@ -229,29 +229,29 @@ public class Proyecto {
 			
 			// 1.2) a) 8 hs, lunes a viernes: resultado 40
 			p1.getCalendario().setHorasLaborables(8);
-			p1.setFechaInicioReal(2016, Calendar.OCTOBER, 24);
-			p1.setFechaFinReal(2016, Calendar.OCTOBER, 28);
+			p1.setFechaInicioReal(2016, Month.OCTOBER.getValue(), 24);
+			p1.setFechaFinReal(2016, Month.OCTOBER.getValue(), 28);
 			System.out.println(p1.esfuerzoRequeridoEnHoras());
 			
 			// 1.2) b) 6 hs, lunes a jueves: resultado 24
 			p1.getCalendario().setHorasLaborables(6);
-			p1.setFechaInicioReal(2016, Calendar.OCTOBER, 24);
-			p1.setFechaFinReal(2016, Calendar.OCTOBER, 27);
+			p1.setFechaInicioReal(2016, Month.OCTOBER.getValue(), 24);
+			p1.setFechaFinReal(2016, Month.OCTOBER.getValue(), 27);
 			System.out.println(p1.esfuerzoRequeridoEnHoras());
 			
 			// 1.2) c) 6 hs, lunes a jueves, feriado martes: resultado 18
 			p1.getCalendario().setHorasLaborables(6);
-			p1.setFechaInicioReal(2016, Calendar.OCTOBER, 24);
-			p1.setFechaFinReal(2016, Calendar.OCTOBER, 27);
-			p1.getCalendario().getFeriados().add(new GregorianCalendar(2016, Calendar.OCTOBER, 25));
+			p1.setFechaInicioReal(2016, Month.OCTOBER.getValue(), 24);
+			p1.setFechaFinReal(2016, Month.OCTOBER.getValue(), 27);
+			p1.getCalendario().getFeriados().add(LocalDate.of(2016, Month.OCTOBER.getValue(), 25));
 			System.out.println(p1.esfuerzoRequeridoEnHoras());
 			
 			p1.getCalendario().getFeriados().clear();
 			
 			// 1.2) d) 8 hs, lunes a viernes de otra semana: resultado 80
 			p1.getCalendario().setHorasLaborables(8);
-			p1.setFechaInicioReal(2016, Calendar.OCTOBER, 24);
-			p1.setFechaFinReal(2016, Calendar.NOVEMBER, 4);
+			p1.setFechaInicioReal(2016, Month.OCTOBER.getValue(), 24);
+			p1.setFechaFinReal(2016, Month.NOVEMBER.getValue(), 4);
 			System.out.println(p1.esfuerzoRequeridoEnHoras());
 			
 		} catch (Exception e) {
