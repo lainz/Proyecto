@@ -139,6 +139,7 @@ public class Proyecto {
 	public int esfuerzoRequerido() {
 		int total = 0;
 		for (int i = 0; i < tareas.size(); i++) {
+			tareas.get(i).getCalendario().setFeriados(calendario.getFeriados());
 			tareas.get(i).getCalendario().setDiasNoLaborables(calendario.getDiasNoLaborables());
 			total = total + tareas.get(i).esfuerzoRequeridoEnHoras(calendario.getHorasLaborables());
 		}
