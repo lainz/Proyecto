@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Calendario {
 
+	private Proyecto proyecto;
 	private int horasLaborables;
 	private ArrayList<LocalDate> feriados;
 	private ArrayList<Integer> diasNoLaborables;
@@ -16,19 +17,16 @@ public class Calendario {
 	// Fechas reales
 	private LocalDate fechaInicioReal;
 	private LocalDate fechaFinReal;
-	
-	Calendario() {
-		this(0);
-	}
 
-	Calendario(int horasLaborables) {
+	Calendario(int horasLaborables, Proyecto proyecto) {
+		this.proyecto = proyecto;
 		this.horasLaborables = horasLaborables;
 		this.feriados = new ArrayList<LocalDate>();
 		this.diasNoLaborables = new ArrayList<Integer>();
 		this.diasNoLaborables.add(6); // Sabado
 		this.diasNoLaborables.add(7); // Domingo
 	}
-	
+
 	public ArrayList<Integer> getDiasNoLaborables() {
 		return diasNoLaborables;
 	}
@@ -52,7 +50,7 @@ public class Calendario {
 	public void setFeriados(ArrayList<LocalDate> feriados) {
 		this.feriados = feriados;
 	}
-	
+
 	public int esfuerzoRequeridoEnHoras() {
 		return esfuerzoEnHoras(fechaInicioReal, fechaFinReal);
 	}
@@ -64,16 +62,12 @@ public class Calendario {
 				return false;
 			}
 		}
-		
+
 		// Otros dias no laborables
 		if (diasNoLaborables.indexOf(dia.getDayOfWeek().getValue()) != -1) {
 			return false;
 		}
 		
-		// Sabados y Domingos
-		//if ((dia.getDayOfWeek().getValue() == 6) || (dia.getDayOfWeek().getValue() == 7)) {
-		//	return false;
-		//}
 		return true;
 	}
 
@@ -101,6 +95,16 @@ public class Calendario {
 				throw new Exception("La fecha de inicio esperada debe ser menor o igual a la fecha de fin esperada.");
 			}
 		}
+		// Cambiar en el proyecto
+		if (proyecto != null) {
+			if (proyecto.getCalendario().getFechaInicioEsperada() != null) {
+				if (fechaInicioEsperada.isBefore(proyecto.getCalendario().getFechaInicioEsperada())) {
+					proyecto.getCalendario().setFechaInicioEsperada(año, mes, dia);
+				}
+			} else {
+				proyecto.getCalendario().setFechaInicioEsperada(año, mes, dia);
+			}
+		}
 	}
 
 	public LocalDate getFechaInicioEsperada() {
@@ -116,6 +120,16 @@ public class Calendario {
 			// Si la fecha inicio es mayor
 			if (fechaInicioEsperada.compareTo(fechaFinEsperada) > 0) {
 				throw new Exception("La fecha de fin esperada debe ser mayor o igual a la fecha de inicio esperada.");
+			}
+		}
+		// Cambiar en el proyecto
+		if (proyecto != null) {
+			if (proyecto.getCalendario().getFechaFinEsperada() != null) {
+				if (fechaFinEsperada.isAfter(proyecto.getCalendario().getFechaFinEsperada())) {
+					proyecto.getCalendario().setFechaFinEsperada(año, mes, dia);
+				}
+			} else {
+				proyecto.getCalendario().setFechaFinEsperada(año, mes, dia);
 			}
 		}
 	}
@@ -135,10 +149,20 @@ public class Calendario {
 				throw new Exception("La fecha de inicio real debe ser menor o igual a la fecha de fin real.");
 			}
 		}
+		// Cambiar en el proyecto
+		if (proyecto != null) {
+			if (proyecto.getCalendario().getFechaInicioReal() != null) {
+				if (fechaInicioReal.isBefore(proyecto.getCalendario().getFechaInicioReal())) {
+					proyecto.getCalendario().setFechaInicioReal(año, mes, dia);
+				}
+			} else {
+				proyecto.getCalendario().setFechaInicioReal(año, mes, dia);
+			}
+		}
 	}
 
 	public LocalDate getFechaInicioReal() {
-		return fechaInicioEsperada;
+		return fechaInicioReal;
 	}
 
 	// Fecha fin real
@@ -152,26 +176,37 @@ public class Calendario {
 				throw new Exception("La fecha de fin real debe ser mayor o igual a la fecha de inicio real.");
 			}
 		}
+		// Cambiar en el proyecto
+		if (proyecto != null) {
+			if (proyecto.getCalendario().getFechaFinReal() != null) {
+				if (fechaFinReal.isAfter(proyecto.getCalendario().getFechaFinReal())) {
+					proyecto.getCalendario().setFechaFinReal(año, mes, dia);
+				}
+			} else {
+				proyecto.getCalendario().setFechaFinReal(año, mes, dia);
+			}
+		}
 	}
 	
+	public LocalDate getFechaFinReal() {
+		return fechaFinReal;
+	}
+
 	public Double porcentajeDeAvance(LocalDate dia) {
-		LocalDate inicio = LocalDate.of(fechaInicioReal.getYear(), fechaInicioReal.getMonth(), fechaInicioReal.getDayOfMonth());
+		LocalDate inicio = LocalDate.of(fechaInicioReal.getYear(), fechaInicioReal.getMonth(),
+				fechaInicioReal.getDayOfMonth());
 		int total_dias = 0;
 		int total_dias_pasados = 0;
-		
+
 		do {
 			total_dias++;
 			if (!inicio.isAfter(dia)) {
-			  total_dias_pasados++;
+				total_dias_pasados++;
 			}
 			inicio = inicio.plusDays(1);
-		} while(!inicio.isAfter(fechaFinReal));
-	
-		return (double) ((total_dias_pasados * 100) / total_dias);
-	}
+		} while (!inicio.isAfter(fechaFinReal));
 
-	public LocalDate getFechaFinReal() {
-		return fechaFinReal;
+		return (double) ((total_dias_pasados * 100) / total_dias);
 	}
 
 	public static void main(String[] args) {

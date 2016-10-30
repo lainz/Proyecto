@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Tarea {
 
+	private Proyecto proyecto;
 	private String nombre;
 	private String detalles;
 
@@ -13,11 +14,12 @@ public class Tarea {
 	// Calendario
 	Calendario calendario;
 
-	Tarea(String nombre, String detalles) throws Exception {
+	Tarea(String nombre, String detalles, Proyecto proyecto) throws Exception {
+		this.proyecto = proyecto;
 		this.setNombre(nombre);
 		this.setDetalles(detalles);
 		this.subtareas = new ArrayList<Tarea>();
-		this.calendario = new Calendario();
+		this.calendario = new Calendario(0, proyecto);
 	}
 
 	// Subtareas
@@ -65,7 +67,8 @@ public class Tarea {
 
 	// SubTareas
 
-	public void agregarSubTarea(Tarea tarea) throws Exception {
+	public void agregarSubTarea(String nombre, String descripcion) throws Exception {
+		Tarea tarea = new Tarea(nombre, descripcion, this.proyecto);
 		if (subtareas.indexOf(tarea) != -1) {
 			throw new Exception("No se puede agregar una tarea que ya fue agregada.");
 		}
