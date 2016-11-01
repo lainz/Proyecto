@@ -86,9 +86,9 @@ public class Calendario {
 
 	// Fecha inicio esperada
 
-	public void setFechaInicioEsperada(int año, int mes, int dia) throws Exception {
-		fechaInicioEsperada = LocalDate.of(año, mes, dia);
-		// Si el año de fin esta establecido
+	public void setFechaInicioEsperada(int anio, int mes, int dia) throws Exception {
+		fechaInicioEsperada = LocalDate.of(anio, mes, dia);
+		// Si el aï¿½o de fin esta establecido
 		if (fechaFinEsperada != null) {
 			// Si la fecha inicio es mayor
 			if (fechaInicioEsperada.compareTo(fechaFinEsperada) > 0) {
@@ -99,10 +99,10 @@ public class Calendario {
 		if (proyecto != null) {
 			if (proyecto.getCalendario().getFechaInicioEsperada() != null) {
 				if (fechaInicioEsperada.isBefore(proyecto.getCalendario().getFechaInicioEsperada())) {
-					proyecto.getCalendario().setFechaInicioEsperada(año, mes, dia);
+					proyecto.getCalendario().setFechaInicioEsperada(anio, mes, dia);
 				}
 			} else {
-				proyecto.getCalendario().setFechaInicioEsperada(año, mes, dia);
+				proyecto.getCalendario().setFechaInicioEsperada(anio, mes, dia);
 			}
 		}
 	}
@@ -113,9 +113,9 @@ public class Calendario {
 
 	// Fecha fin esperada
 
-	public void setFechaFinEsperada(int año, int mes, int dia) throws Exception {
-		fechaFinEsperada = LocalDate.of(año, mes, dia);
-		// Si el año de fin esta establecido
+	public void setFechaFinEsperada(int anio, int mes, int dia) throws Exception {
+		fechaFinEsperada = LocalDate.of(anio, mes, dia);
+		// Si el aï¿½o de fin esta establecido
 		if (fechaInicioEsperada != null) {
 			// Si la fecha inicio es mayor
 			if (fechaInicioEsperada.compareTo(fechaFinEsperada) > 0) {
@@ -126,10 +126,10 @@ public class Calendario {
 		if (proyecto != null) {
 			if (proyecto.getCalendario().getFechaFinEsperada() != null) {
 				if (fechaFinEsperada.isAfter(proyecto.getCalendario().getFechaFinEsperada())) {
-					proyecto.getCalendario().setFechaFinEsperada(año, mes, dia);
+					proyecto.getCalendario().setFechaFinEsperada(anio, mes, dia);
 				}
 			} else {
-				proyecto.getCalendario().setFechaFinEsperada(año, mes, dia);
+				proyecto.getCalendario().setFechaFinEsperada(anio, mes, dia);
 			}
 		}
 	}
@@ -140,9 +140,9 @@ public class Calendario {
 
 	// Fecha inicio real
 
-	public void setFechaInicioReal(int año, int mes, int dia) throws Exception {
-		fechaInicioReal = LocalDate.of(año, mes, dia);
-		// Si el año de fin esta establecido
+	public void setFechaInicioReal(int anio, int mes, int dia) throws Exception {
+		fechaInicioReal = LocalDate.of(anio, mes, dia);
+		// Si el aï¿½o de fin esta establecido
 		if (fechaFinReal != null) {
 			// Si la fecha inicio es mayor
 			if (fechaInicioReal.compareTo(fechaFinReal) > 0) {
@@ -153,10 +153,10 @@ public class Calendario {
 		if (proyecto != null) {
 			if (proyecto.getCalendario().getFechaInicioReal() != null) {
 				if (fechaInicioReal.isBefore(proyecto.getCalendario().getFechaInicioReal())) {
-					proyecto.getCalendario().setFechaInicioReal(año, mes, dia);
+					proyecto.getCalendario().setFechaInicioReal(anio, mes, dia);
 				}
 			} else {
-				proyecto.getCalendario().setFechaInicioReal(año, mes, dia);
+				proyecto.getCalendario().setFechaInicioReal(anio, mes, dia);
 			}
 		}
 	}
@@ -167,9 +167,9 @@ public class Calendario {
 
 	// Fecha fin real
 
-	public void setFechaFinReal(int año, int mes, int dia) throws Exception {
-		fechaFinReal = LocalDate.of(año, mes, dia);
-		// Si el año de fin esta establecido
+	public void setFechaFinReal(int anio, int mes, int dia) throws Exception {
+		fechaFinReal = LocalDate.of(anio, mes, dia);
+		// Si el aï¿½o de fin esta establecido
 		if (fechaInicioReal != null) {
 			// Si la fecha inicio es mayor
 			if (fechaInicioReal.compareTo(fechaFinReal) > 0) {
@@ -180,10 +180,10 @@ public class Calendario {
 		if (proyecto != null) {
 			if (proyecto.getCalendario().getFechaFinReal() != null) {
 				if (fechaFinReal.isAfter(proyecto.getCalendario().getFechaFinReal())) {
-					proyecto.getCalendario().setFechaFinReal(año, mes, dia);
+					proyecto.getCalendario().setFechaFinReal(anio, mes, dia);
 				}
 			} else {
-				proyecto.getCalendario().setFechaFinReal(año, mes, dia);
+				proyecto.getCalendario().setFechaFinReal(anio, mes, dia);
 			}
 		}
 	}
