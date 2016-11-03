@@ -89,7 +89,7 @@ public class Tarea {
 		}
 	}
 
-	public void vaciasSubTareas() {
+	public void vaciarSubTareas() {
 		subtareas.clear();
 	}
 

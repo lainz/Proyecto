@@ -81,7 +81,7 @@ public class Proyecto {
 		}
 	}
 
-	public void vaciasTareas() {
+	public void vaciarTareas() {
 		tareas.clear();
 	}
 
@@ -167,7 +167,7 @@ public class Proyecto {
 			p1.agregarTarea("Programar", "Hacer el tp 2");
 			// System.out.println(p1.numeroDeTareas());
 			p1.quitarTarea(0);
-			p1.vaciasTareas();
+			p1.vaciarTareas();
 			// System.out.println(p1.numeroDeTareas());
 
 			// Personas
