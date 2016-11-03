@@ -216,11 +216,11 @@ public class Proyecto {
 			p2.getTareas().get(0).agregarSubTarea("Subtarea 1", "Ejemplo de subtarea");
 			// System.out.println("Subtareas: " +
 			// p2.getTareas().get(0).numeroDeSubTareas());
-			p2.getTareas().get(0).vaciasSubTareas();
+			p2.getTareas().get(0).vaciarSubTareas();
 			// System.out.println("Subtareas: " +
 			// p2.getTareas().get(0).numeroDeSubTareas());
 			// System.out.println("Tareas: " + p2.numeroDeTareas());
-			p2.vaciasTareas();
+			p2.vaciarTareas();
 			// System.out.println("Tareas: " + p2.numeroDeTareas());
 
 			Proyecto p3 = new Proyecto("Trabajo 3");
