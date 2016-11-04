@@ -152,7 +152,7 @@ public class Proyecto {
 
 		try {
 			// VERSION 1
-			Proyecto p1 = new Proyecto("Trabajo 1");
+			Proyecto p1 = new Proyecto("Proyecto 1");
 
 			// Fechas esperadas
 			p1.getCalendario().setFechaFinEsperada(2016, Month.OCTOBER.getValue(), 29);
@@ -284,7 +284,7 @@ public class Proyecto {
 			}
 
 			p3.getCalendario().getDiasNoLaborables().clear();
-			p3.getCalendario().getDiasNoLaborables().add(4); // jueves
+			p3.getCalendario().getDiasNoLaborables().add(DiaSemana.Jueves.getValue()); // jueves
 
 			System.out.println(p3.esfuerzoRequerido()); // 42
 			

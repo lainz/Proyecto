@@ -23,8 +23,8 @@ public class Calendario {
 		this.horasLaborables = horasLaborables;
 		this.feriados = new ArrayList<LocalDate>();
 		this.diasNoLaborables = new ArrayList<Integer>();
-		this.diasNoLaborables.add(6); // Sabado
-		this.diasNoLaborables.add(7); // Domingo
+		this.diasNoLaborables.add(DiaSemana.Sabado.getValue()); // Sabado
+		this.diasNoLaborables.add(DiaSemana.Domingo.getValue()); // Domingo
 	}
 
 	public ArrayList<Integer> getDiasNoLaborables() {
