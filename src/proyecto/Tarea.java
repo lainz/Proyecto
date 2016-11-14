@@ -66,6 +66,13 @@ public class Tarea {
 	}
 
 	// SubTareas
+	
+	public void agregarSubTarea(Tarea tarea) throws Exception {
+		if (subtareas.indexOf(tarea) != -1) {
+			throw new Exception("No se puede agregar una tarea que ya fue agregada.");
+		}
+		subtareas.add(tarea);
+	}
 
 	public void agregarSubTarea(String nombre, String descripcion) throws Exception {
 		Tarea tarea = new Tarea(nombre, descripcion, this.proyecto);
@@ -95,22 +102,6 @@ public class Tarea {
 
 	public int numeroDeSubTareas() {
 		return subtareas.size();
-	}
-
-	// Esfuerzo en horas
-
-	public int esfuerzoRequeridoEnHoras(int horasLaborables) {
-		int total = 0;
-
-		// Subtareas
-		// for (int i = 0; i < subtareas.size(); i++) {
-		// total = total +
-		// subtareas.get(i).getCalendario().esfuerzoRequeridoEnHoras();
-		// }
-		// Esta tarea
-		total = total + this.calendario.esfuerzoRequeridoEnHoras();
-
-		return total * horasLaborables;
 	}
 
 	@Override

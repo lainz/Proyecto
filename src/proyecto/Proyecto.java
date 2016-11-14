@@ -58,6 +58,13 @@ public class Proyecto {
 	}
 
 	// Tareas
+	
+	public void agregarTarea(Tarea tarea) throws Exception {
+		if (tareas.indexOf(tarea) != -1) {
+			throw new Exception("No se puede agregar una tarea que ya fue agregada.");
+		}
+		tareas.add(tarea);
+	}
 
 	public void agregarTarea(String nombre, String descripcion) throws Exception {
 		Tarea tarea = new Tarea(nombre, descripcion, this);
@@ -135,13 +142,20 @@ public class Proyecto {
 	}
 
 	// Esfuerzo en horas
+	
+	// VERSION 1
+	public int esfuerzoRequeridoCalendario() {
+		return this.calendario.esfuerzoRequeridoEnHoras();
+	}
 
-	public int esfuerzoRequerido() {
+	// VERSION 2
+	public int esfuerzoRequeridoTareas() {
 		int total = 0;
 		for (int i = 0; i < tareas.size(); i++) {
 			tareas.get(i).getCalendario().setFeriados(calendario.getFeriados());
 			tareas.get(i).getCalendario().setDiasNoLaborables(calendario.getDiasNoLaborables());
-			total = total + tareas.get(i).esfuerzoRequeridoEnHoras(calendario.getHorasLaborables());
+			tareas.get(i).getCalendario().setHorasLaborables(calendario.getHorasLaborables());
+			total = total + tareas.get(i).getCalendario().esfuerzoRequeridoEnHoras();
 		}
 		return total;
 	}
@@ -151,6 +165,7 @@ public class Proyecto {
 	public static void main(String[] args) {
 
 		try {
+			System.out.println("VERSION 1");
 			// VERSION 1
 			Proyecto p1 = new Proyecto("Proyecto 1");
 
@@ -185,20 +200,20 @@ public class Proyecto {
 			p1.getCalendario().setHorasLaborables(8);
 			p1.getCalendario().setFechaInicioReal(2016, Month.OCTOBER.getValue(), 24);
 			p1.getCalendario().setFechaFinReal(2016, Month.OCTOBER.getValue(), 28);
-		    System.out.println(p1.getCalendario().esfuerzoRequeridoEnHoras() * p1.getCalendario().getHorasLaborables());
+		    System.out.println(p1.esfuerzoRequeridoCalendario());
 
 			// 1.2) b) 6 hs, lunes a jueves: resultado 24
 			p1.getCalendario().setHorasLaborables(6);
 			p1.getCalendario().setFechaInicioReal(2016, Month.OCTOBER.getValue(), 24);
 			p1.getCalendario().setFechaFinReal(2016, Month.OCTOBER.getValue(), 27);
-			System.out.println(p1.getCalendario().esfuerzoRequeridoEnHoras()  * p1.getCalendario().getHorasLaborables());
+			System.out.println(p1.esfuerzoRequeridoCalendario());
 
 			// 1.2) c) 6 hs, lunes a jueves, feriado martes: resultado 18
 			p1.getCalendario().setHorasLaborables(6);
 			p1.getCalendario().setFechaInicioReal(2016, Month.OCTOBER.getValue(), 24);
 			p1.getCalendario().setFechaFinReal(2016, Month.OCTOBER.getValue(), 27);
 			p1.getCalendario().getFeriados().add(LocalDate.of(2016, Month.OCTOBER.getValue(), 25));
-			System.out.println(p1.getCalendario().esfuerzoRequeridoEnHoras()  * p1.getCalendario().getHorasLaborables());
+			System.out.println(p1.esfuerzoRequeridoCalendario());
 
 			p1.getCalendario().getFeriados().clear();
 
@@ -206,8 +221,9 @@ public class Proyecto {
 			p1.getCalendario().setHorasLaborables(8);
 			p1.getCalendario().setFechaInicioReal(2016, Month.OCTOBER.getValue(), 24);
 			p1.getCalendario().setFechaFinReal(2016, Month.NOVEMBER.getValue(), 4);
-			System.out.println(p1.getCalendario().esfuerzoRequeridoEnHoras()  * p1.getCalendario().getHorasLaborables());
+			System.out.println(p1.esfuerzoRequeridoCalendario());
 
+			System.out.println("VERSION 2");
 			// VERSION 2
 			Proyecto p2 = new Proyecto("Trabajo 2");
 			p2.agregarTarea("Tarea 1", "Ejemplo de tarea");
@@ -238,7 +254,7 @@ public class Proyecto {
 			p3.getTareas().get(1).getCalendario().setFechaInicioReal(2016, Month.OCTOBER.getValue(), 25);
 			p3.getTareas().get(1).getCalendario().setFechaFinReal(2016, Month.OCTOBER.getValue(), 28);
 
-			System.out.println(p3.esfuerzoRequerido()); // 72
+			System.out.println(p3.esfuerzoRequeridoTareas()); // 72
 
 			p3.getTareas().clear();
 
@@ -256,7 +272,7 @@ public class Proyecto {
 			p3.getTareas().get(1).getCalendario().setFechaInicioReal(2016, Month.OCTOBER.getValue(), 25);
 			p3.getTareas().get(1).getCalendario().setFechaFinReal(2016, Month.OCTOBER.getValue(), 28);
 
-			System.out.println(p3.esfuerzoRequerido()); // 54
+			System.out.println(p3.esfuerzoRequeridoTareas()); // 54
 
 			p3.getTareas().clear();
 
@@ -286,7 +302,7 @@ public class Proyecto {
 			p3.getCalendario().getDiasNoLaborables().clear();
 			p3.getCalendario().getDiasNoLaborables().add(DiaSemana.Jueves.getValue()); // jueves
 
-			System.out.println(p3.esfuerzoRequerido()); // 42
+			System.out.println(p3.esfuerzoRequeridoTareas()); // 42
 			
 			System.out.println(p3.getCalendario().getFechaInicioEsperada()); // 2016-10-24
 			System.out.println(p3.getCalendario().getFechaFinEsperada()); // 2016-10-28

@@ -52,7 +52,7 @@ public class Calendario {
 	}
 
 	public int esfuerzoRequeridoEnHoras() {
-		return esfuerzoEnHoras(fechaInicioReal, fechaFinReal);
+		return esfuerzoEnHoras(fechaInicioReal, fechaFinReal) * this.horasLaborables;
 	}
 
 	private boolean seTrabaja(LocalDate dia) {
@@ -71,7 +71,7 @@ public class Calendario {
 		return true;
 	}
 
-	public int esfuerzoEnHoras(LocalDate inicio, LocalDate fin) {
+	private int esfuerzoEnHoras(LocalDate inicio, LocalDate fin) {
 		int total_dias = 0;
 
 		do {
